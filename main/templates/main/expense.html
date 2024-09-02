@@ -1,0 +1,143 @@
+{%extends 'main/base.html'%}
+
+{%block title%}
+<title>test</title>
+{%endblock%}
+
+{%block content%}
+<style>
+    .expenses {
+        color: red;
+    }
+    .total {
+        position: absolute;
+        right: 150px;
+        top: 130px;
+        color: rgb(10, 235, 10);
+    }
+    label {
+        font-size: xx-large;
+        font-weight: bold;
+    }
+    .addincome{
+        color: rgb(10, 235, 10);
+        position: absolute;
+        right: 480px;
+        top: 115px;
+    }
+    .source {
+        position: absolute;
+        right: 550px;
+        top: 208px;
+    }
+    .money {
+        position: absolute;
+        right: 520px;
+        top: 265px;
+    }
+    .button {
+        position: absolute;
+        right: 780px;
+        top: 310px;
+    }
+
+    .cause {
+        position: absolute;
+        right: 740px;
+        top: 195px;
+    }
+
+    .amount {
+        position: absolute;
+        right: 710px;
+        top: 250px;
+    }
+
+    .expense_table {
+        color: red;
+        font-size: large;
+    }
+
+    .addincome_table {
+        color: rgb(10, 235, 10);
+        font-size: large;
+        position: absolute;
+        right: 560px;
+        top: 365px;
+    }
+
+    .logout {
+        position: absolute;
+        right: 200px;
+        top: 50px;
+        background-color: rgb(143, 61, 61);
+
+    }
+</style>
+
+<form method="POST">
+    {%csrf_token%}
+    <div>
+        <h1 class="expenses">Expenses:</h1><br>
+        <label for="cause">Cause:</label>
+        <input type="text" id="cause" name="cause" value="None"><br>
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount" value="0"><br>
+        <button type="submit" name="calculate" id="calculate" class="btn btn-success" value="clicked">Calculate</button>
+    </div>
+
+    <div>
+        <h1 class="addincome">Additional Income</h1><br>
+        <label for="incause" class="cause">Cause:</label>
+        <input type="text" id="incause" class="source" value="None" name="incause">
+        <label for="inamount" class="amount">Amount:</label>
+        <input type="number" id="inamount" class="money" value="0" name="inamount">
+        <div class="button">
+            <button type="submit" class="btn btn-success" name="add" value="added">Add</button>
+        </div>
+    </div>
+    <h1 class="total">${{tm.total}}</h1>
+    <button class="logout", type="submit", name="logout", value="logged out">Logout</button>
+
+    <table border="1" class="expense_table">
+        <tr>
+            <th>Cause:</th>
+            <th>Amount:</th>
+        </tr>
+
+        {%if expenses%}
+            {%for expense in expenses%}
+                <tr>
+                    <td>{{expense.name}}</td>
+                    <td>-{{expense.amount}}</td>
+                </tr>
+            {%endfor%}
+        {%else%}
+            <tr>
+                <td>No transactions</td>
+                <td>No transactions</td>
+            </tr>
+        {%endif%}
+    </table>
+
+    <table border="1" class="addincome_table">
+        <tr>
+            <th>Cause:</th>
+            <th>Amount:</th>
+        </tr>
+        {%if inc%}
+            {%for incomes in tm.income_set.all%}
+            <tr>
+                <td>{{incomes.name}}</td>
+                <td>+{{incomes.amount}}</td>
+            </tr>
+            {%endfor%}
+        {%else%}
+            <tr>
+                <td>No transactions</td>
+                <td>No transactions</td>
+            </tr>
+        {%endif%}
+    </table>
+</form>
+{%endblock%}

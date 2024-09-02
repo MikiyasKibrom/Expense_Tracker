@@ -1,0 +1,32 @@
+{%extends 'main/base.html'%}
+
+{%block title%}
+<title>Start</title>
+{%endblock%}
+
+{%block content%}
+<style>
+    .income {
+        color: rgb(10, 235, 10);
+    }
+    .expenses {
+        color: red;
+    }
+    .total {
+        position: absolute;
+        right: 150px;
+        top: 130px;
+        color: rgb(10, 235, 10);
+    }
+</style>
+
+<form method="POST">
+    {%csrf_token%}
+    <div class="input-group-prepend">
+        <h1 class="income">Income:</h1>
+        {{form.income}}
+    </div>
+    <button type="submit" class="btn btn-success" name="submit" id="submit" value="clicked">Submit</button>
+    <h1 class="total">${{tm.total}}</h1>
+</form>
+{%endblock%}
